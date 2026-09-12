@@ -53,14 +53,14 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 For Software:
 
 # Screenshots (Add at least 3)
-![Screenshot1](https://via.placeholder.com/800x450.png?text=Dashboard+Overview)
-*Personal dashboard showing private thoughts, public items, and storage usage.*
+![Landing Page](public/screenshots/landing.png)
+*Landing page showcasing the value proposition and onboarding.*
 
-![Screenshot2](https://via.placeholder.com/800x450.png?text=Create+Thought+Modal)
-*Interactive modal for capturing thoughts, notes, ideas, documents, and privacy levels.*
+![Dashboard Overview](public/screenshots/dashboard.png)
+*Personal knowledge space dashboard showing thoughts, privacy statuses, and storage usage.*
 
-![Screenshot3](https://via.placeholder.com/800x450.png?text=Public+User+Profile)
-*Public profile view displaying shared thoughts, bio, skills, and portfolio items.*
+![Profile Setup](public/screenshots/profile.png)
+*User profile management page for customizing digital bio and public presence.*
 
 # Diagrams
 ```
@@ -78,8 +78,8 @@ For Software:
 
 ### Project Demo
 # Video
-[Add your demo video link here]
-*Demonstrating user registration, thought creation, privacy toggling, and profile viewing.*
+[https://drive.google.com/file/d/1g-gTaFyRDKNE3RFywRxymCXGYiG92QEF/view?usp=sharing](https://drive.google.com/file/d/1g-gTaFyRDKNE3RFywRxymCXGYiG92QEF/view?usp=sharing)
+*Video demonstrating the user registration, dashboard overview, thought creation, and profile customization.*
 
 # Additional Demos
 - Live Web App: [Deploy on Vercel]
