@@ -25,18 +25,18 @@ function LoginForm() {
     try {
       const res = await signIn("credentials", {
         redirect: false,
-        email: email.toLowerCase().trim(),
+        email: email.trim(),
         password: password
       })
 
-      if (res?.error) {
-        setError("Invalid email or password. Please try again.")
+      if (!res || res.error) {
+        setError("Invalid email/username or password. Please try again.")
         setIsLoading(false)
         return
       }
 
-      router.push("/dashboard")
-      router.refresh()
+      // Hard redirect to dashboard to ensure session cookie is immediately active
+      window.location.href = "/dashboard"
     } catch (err: any) {
       setError("An unexpected error occurred. Please try again.")
       setIsLoading(false)
@@ -85,16 +85,16 @@ function LoginForm() {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">
-              Email Address
+              Email or Username
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
                 <Mail className="w-4 h-4" />
               </div>
               <input
-                type="email"
+                type="text"
                 required
-                placeholder="alex@example.com"
+                placeholder="alex@example.com or username"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full pl-10 pr-4 py-3 bg-slate-950/60 border border-slate-800 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors text-sm"
