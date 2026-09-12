@@ -1,0 +1,110 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  accounts      Account[]
+  sessions      Session[]
+  profile       Profile?
+  contents      ContentItem[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Profile {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  username    String?  @unique
+  bio         String?
+  aboutMe     String?
+  interests   String?
+  skills      String?
+  location    String?
+  website     String?
+  isPublic    Boolean  @default(false)
+  
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model ContentItem {
+  id            String    @id @default(cuid())
+  userId        String
+  title         String
+  content       String?
+  type          String    // THOUGHT, NOTE, IDEA, ARTICLE, IMAGE, DOCUMENT, OTHER
+  category      String?   @default("General")
+  privacyStatus String    @default("PRIVATE") // PRIVATE, PUBLIC, PROFILE_ONLY, UNLISTED
+  isDraft       Boolean   @default(false)
+  isFavorite    Boolean   @default(false)
+  isArchived    Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  files         FileAttachment[]
+  tags          Tag[]
+  
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model FileAttachment {
+  id            String    @id @default(cuid())
+  contentItemId String
+  filename      String
+  url           String
+  mimeType      String
+  size          Int
+  
+  contentItem   ContentItem @relation(fields: [contentItemId], references: [id], onDelete: Cascade)
+}
+
+model Tag {
+  id           String        @id @default(cuid())
+  name         String        @unique
+  contentItems ContentItem[]
+}
